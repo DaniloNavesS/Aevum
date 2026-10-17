@@ -6,6 +6,20 @@ Aevum is an open source GNOME Shell 48 extension that turns the date and time me
 
 This is an experimental extension for **Fedora 42 / GNOME Shell 48.8 / Wayland**. The panel opens when you click the date and time in the top bar. It does not add another top bar button.
 
+## Screenshots
+
+### Overview — dark theme
+
+![Aevum overview in the dark theme, showing the calendar, audio controls, and current track](images/overview-dark.png)
+
+### System — dark theme
+
+![Aevum system page in the dark theme, showing CPU, memory, disk, network, and ping cards](images/system-dark.png)
+
+### Overview — light theme
+
+![Aevum overview in the light theme](images/overview-light.png)
+
 ## Installation
 
 Extract the ZIP archive, open a terminal in the extracted directory (the one containing this README), and run:
