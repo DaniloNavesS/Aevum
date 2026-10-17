@@ -1,0 +1,8 @@
+{
+  "uuid": "aevum@local",
+  "name": "Aevum",
+  "description": "A control center in the date and time menu with a calendar, volume, media, and system performance. Built for GNOME 48.",
+  "gettext-domain": "aevum",
+  "shell-version": ["48"],
+  "version": 7
+}

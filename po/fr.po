@@ -1,0 +1,244 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: aevum 7\n"
+"Language: fr\n"
+"Language-Team: fr\n"
+"Last-Translator: Aevum contributors\n"
+"PO-Revision-Date: 2026-10-16 00:00-0300\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "The date and time menu is unavailable."
+msgstr "Le menu de date et d’heure est indisponible."
+
+msgid "Overview"
+msgstr "Vue d’ensemble"
+
+msgid "Media"
+msgstr "Médias"
+
+msgid "System"
+msgstr "Système"
+
+msgid "Notifications"
+msgstr "Notifications"
+
+msgid "Appearance"
+msgstr "Apparence"
+
+msgid "Waiting for test…"
+msgstr "En attente du test…"
+
+msgid "NOW"
+msgstr "MAINTENANT"
+
+msgid "YOUR SPACE"
+msgstr "VOTRE ESPACE"
+
+msgid "Settings"
+msgstr "Paramètres"
+
+msgid "Weather"
+msgstr "Météo"
+
+msgid "CALENDAR"
+msgstr "CALENDRIER"
+
+msgid "AUDIO OUTPUT"
+msgstr "SORTIE AUDIO"
+
+msgid "Waiting for audio"
+msgstr "En attente du son"
+
+msgid "Audio output volume"
+msgstr "Volume de la sortie audio"
+
+msgid "Mute"
+msgstr "Couper le son"
+
+msgid "NOW PLAYING"
+msgstr "LECTURE EN COURS"
+
+msgid "No player open"
+msgstr "Aucun lecteur ouvert"
+
+msgid "Open media"
+msgstr "Ouvrir les médias"
+
+msgid "Open your music player"
+msgstr "Ouvrez votre lecteur de musique"
+
+msgid "Compatible with players that support MPRIS."
+msgstr "Compatible avec les lecteurs prenant en charge MPRIS."
+
+msgid "Track position"
+msgstr "Position du morceau"
+
+msgid "Previous track"
+msgstr "Morceau précédent"
+
+msgid "Play or pause"
+msgstr "Lire ou mettre en pause"
+
+msgid "Next track"
+msgstr "Morceau suivant"
+
+msgid "PROCESSOR"
+msgstr "PROCESSEUR"
+
+msgid "History · up to 22 s"
+msgstr "Historique · jusqu’à 22 s"
+
+msgid "RAM"
+msgstr "MÉMOIRE RAM"
+
+msgid "Calculating…"
+msgstr "Calcul en cours…"
+
+msgid "DISK · /"
+msgstr "DISQUE · /"
+
+msgid "NETWORK"
+msgstr "RÉSEAU"
+
+msgid "Detecting interface…"
+msgstr "Détection de l’interface…"
+
+msgid "PING"
+msgstr "PING"
+
+msgid "DESTINATION"
+msgstr "DESTINATION"
+
+msgid "Mush · BR"
+msgstr "Mush · BR"
+
+msgid "Open System Monitor"
+msgstr "Ouvrir le moniteur système"
+
+msgid "Could not save appearance: %s"
+msgstr "Impossible d’enregistrer l’apparence : %s"
+
+msgid "PANEL APPEARANCE"
+msgstr "APPARENCE DU PANNEAU"
+
+msgid "Automatic mode follows GNOME’s light or dark mode and accent color."
+msgstr "Le mode automatique suit le mode clair ou sombre et la couleur d’accentuation de GNOME."
+
+msgid "Automatic"
+msgstr "Automatique"
+
+msgid "Creator’s theme"
+msgstr "Thème du créateur"
+
+msgid "Light"
+msgstr "Clair"
+
+msgid "Custom"
+msgstr "Personnalisé"
+
+msgid "ACCENT COLORS"
+msgstr "COULEURS D’ACCENTUATION"
+
+msgid "%s color"
+msgstr "Couleur %s"
+
+msgid "blue"
+msgstr "bleu"
+
+msgid "teal"
+msgstr "bleu sarcelle"
+
+msgid "green"
+msgstr "vert"
+
+msgid "yellow"
+msgstr "jaune"
+
+msgid "orange"
+msgstr "orange"
+
+msgid "red"
+msgstr "rouge"
+
+msgid "pink"
+msgstr "rose"
+
+msgid "purple"
+msgstr "violet"
+
+msgid "slate blue"
+msgstr "gris bleuté"
+
+msgid "CUSTOM COLORS · HEXADECIMAL"
+msgstr "COULEURS PERSONNALISÉES · HEXADÉCIMAL"
+
+msgid "Background"
+msgstr "Arrière-plan"
+
+msgid "Cards"
+msgstr "Cartes"
+
+msgid "Accent"
+msgstr "Accentuation"
+
+msgid "Text"
+msgstr "Texte"
+
+msgid "Apply colors"
+msgstr "Appliquer les couleurs"
+
+msgid "Follows changes to GNOME appearance settings."
+msgstr "Suit les changements des paramètres d’apparence de GNOME."
+
+msgid "Custom colors are active."
+msgstr "Les couleurs personnalisées sont actives."
+
+msgid "Fixed theme with GNOME’s accent color."
+msgstr "Thème fixe avec la couleur d’accentuation de GNOME."
+
+msgid "Invalid color for %s: use #RRGGBB."
+msgstr "Couleur invalide pour %s : utilisez #RRGGBB."
+
+msgid "Application not found: %s. Install it or open its settings from the applications menu."
+msgstr "Application introuvable : %s. Installez-la ou ouvrez ses paramètres depuis le menu des applications."
+
+msgid "No audio output"
+msgstr "Aucune sortie audio"
+
+msgid "Sound muted"
+msgstr "Son coupé"
+
+msgid "Volume · %s%"
+msgstr "Volume · %s%"
+
+msgid "Unmute"
+msgstr "Rétablir le son"
+
+msgid "%a, %B %d"
+msgstr "%a %d %B"
+
+msgid "Interface: %s"
+msgstr "Interface : %s"
+
+msgid "No network interface"
+msgstr "Aucune interface réseau"
+
+msgid "Destination not responding"
+msgstr "La destination ne répond pas"
+
+msgid "Game server · TCP 25565"
+msgstr "Serveur de jeu · TCP 25565"
+
+msgid "Player connected"
+msgstr "Lecteur connecté"
+
+msgid "MPRIS player connected"
+msgstr "Lecteur MPRIS connecté"
+
+msgid "No MPRIS player found."
+msgstr "Aucun lecteur MPRIS trouvé."
+
+msgid "A control center in the date and time menu with a calendar, volume, media, and system performance. Built for GNOME 48."
+msgstr "Centre de contrôle dans le menu de date et d’heure : calendrier, volume, médias et performances. Conçu pour GNOME 48."

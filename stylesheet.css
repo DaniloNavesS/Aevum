@@ -1,0 +1,74 @@
+/* Classes isoladas para não alterar os menus e controles do resto do Shell. */
+.nd-root { width: 760px; padding: 12px; spacing: 14px; color: #e1e8e6; }
+.nd-page-scroll { min-width: 0; }
+.nd-tabs { spacing: 6px; padding: 5px; border-radius: 13px; background-color: #171c1d; }
+.nd-tab-row { spacing: 6px; }
+.nd-tab { padding: 11px 12px; border-radius: 9px; color: #9caead; font-size: 12px; }
+.nd-tab:hover, .nd-tab:focus { background-color: #303b3b; color: #e8f5f4; }
+.nd-tab-active { background-color: #293b3d; color: #a6d9de; }
+.nd-grid { spacing: 12px; }
+.nd-column { width: 175px; spacing: 12px; }
+.nd-tile { padding: 18px; spacing: 14px; border-radius: 15px; background-color: #252c2d; border: 1px solid #354041; }
+.nd-calendar-tile { padding: 12px; spacing: 8px; }
+.nd-eyebrow { color: #92bfc3; font-size: 10px; font-weight: bold; }
+.nd-clock { color: #b4e1e5; font-size: 39px; font-weight: bold; }
+.nd-heading { color: #e5edec; font-size: 19px; font-weight: bold; }
+.nd-text { font-size: 13px; }
+.nd-muted { color: #a3b1af; font-size: 11px; }
+.nd-button { border-radius: 8px; background-color: #344244; color: #c4e7e9; padding: 10px; font-size: 11px; }
+.nd-button:hover, .nd-button:focus { background-color: #455c60; color: white; }
+.nd-icon-label { spacing: 6px; }
+.nd-track { color: #cee8e8; font-size: 13px; }
+.nd-media-page, .nd-system-page { padding: 24px; background-color: #252c2d; border-radius: 15px; }
+.nd-media-page { spacing: 18px; }
+.nd-system-page { spacing: 18px; }
+.nd-system-page .nd-tile { spacing: 11px; }
+.nd-chart { height: 76px; spacing: 3px; padding: 2px 0; }
+.nd-chart-bar { border-radius: 3px 3px 1px 1px; }
+.nd-chart-cpu .nd-chart-bar { background-color: #6dc9d0; }
+.nd-chart-memory .nd-chart-bar { background-color: #eba851; }
+.nd-network-rate { color: #c5e3e6; font-size: 19px; font-weight: bold; }
+.nd-disk-chart { height: 76px; spacing: 2px; }
+.nd-disk-segment { border-radius: 3px; background-color: #3d4a4c; }
+.nd-disk-segment-active { background-color: #bd769e; }
+.nd-music-icon { color: #9fd2d9; }
+.nd-artwork-box { width: 300px; height: 190px; }
+.nd-artwork { width: 300px; height: 190px; border-radius: 10px; }
+.nd-large-track { font-size: 23px; text-align: center; }
+.nd-media-artist { text-align: center; }
+.nd-media-controls { spacing: 15px; }
+.nd-media-progress { spacing: 5px; }
+.nd-media-time { text-align: center; }
+.nd-transport { padding: 14px 25px; border-radius: 13px; background-color: #364446; color: #d0e9ea; }
+.nd-transport:hover, .nd-transport:focus { background-color: #4c6467; }
+.nd-play { background-color: #a4d5da; color: #1d2d30; }
+.nd-metric { color: #b5dfe3; font-size: 31px; font-weight: bold; }
+.nd-cpu-metric { color: #6dc9d0; }
+.nd-memory-metric { color: #eba851; }
+.nd-disk-metric { color: #bd769e; }
+.nd-notice { padding: 10px; color: #dfcd98; font-size: 11px; }
+.nd-root .calendar { padding: 0; }
+.nd-root .nd-calendar .calendar-day { width: 46px; height: 40px; margin: 1px; padding: 0; border-radius: 8px; }
+.nd-root .calendar-today { background-color: #8dbec5; color: #15272a; font-weight: bold; }
+.nd-root .calendar-month-label { color: #b5dfe3; }
+.nd-root .slider { height: 20px; color: #a8d7dc; -barlevel-active-background-color: #8fbfc8; }
+.nd-appearance-page { padding: 22px; spacing: 14px; border-radius: 15px; border: 1px solid #354041; }
+.nd-appearance-options, .nd-swatches, .nd-color-fields { spacing: 9px; }
+.nd-choice { padding: 12px 8px; border-radius: 9px; font-size: 12px; }
+.nd-choice-active { font-weight: bold; }
+.nd-swatch { padding: 5px 10px; font-size: 25px; border-radius: 9px; }
+.nd-swatch:hover, .nd-swatch:focus { background-color: #455c60; }
+.nd-color-field { spacing: 5px; }
+.nd-color-entry { padding: 9px; border-radius: 8px; border: 1px solid #354041; font-size: 12px; }
+.nd-apply { width: 150px; }
+.nd-root.nd-compact { spacing: 9px; }
+.nd-compact .nd-tabs { spacing: 5px; }
+.nd-compact .nd-tab { padding: 9px 5px; font-size: 10px; }
+.nd-compact .nd-grid { spacing: 9px; }
+.nd-compact .nd-tile { padding: 12px; spacing: 8px; }
+.nd-compact .nd-calendar-tile { padding: 8px; }
+.nd-compact .nd-media-page, .nd-compact .nd-system-page,
+.nd-compact .nd-appearance-page { padding: 14px; spacing: 11px; }
+.nd-compact .nd-calendar .calendar-day { width: 32px; height: 32px; margin: 0; }
+.nd-compact .nd-swatches { spacing: 3px; }
+.nd-compact .nd-swatch { padding: 4px 6px; font-size: 19px; }
