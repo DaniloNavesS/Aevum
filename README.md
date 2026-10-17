@@ -20,6 +20,10 @@ This is an experimental extension for **Fedora 42 / GNOME Shell 48.8 / Wayland**
 
 ![Aevum overview in the light theme](images/overview-light.png)
 
+## Demo
+
+![Animated demo of the Aevum panel switching between its pages](images/aevum-demo.gif)
+
 ## Installation
 
 Extract the ZIP archive, open a terminal in the extracted directory (the one containing this README), and run:
