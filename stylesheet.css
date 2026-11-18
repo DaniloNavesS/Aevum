@@ -1,74 +1,420 @@
-/* Classes isoladas para não alterar os menus e controles do resto do Shell. */
-.nd-root { width: 760px; padding: 12px; spacing: 14px; color: #e1e8e6; }
-.nd-page-scroll { min-width: 0; }
-.nd-tabs { spacing: 6px; padding: 5px; border-radius: 13px; background-color: #171c1d; }
-.nd-tab-row { spacing: 6px; }
-.nd-tab { padding: 11px 12px; border-radius: 9px; color: #9caead; font-size: 12px; }
-.nd-tab:hover, .nd-tab:focus { background-color: #303b3b; color: #e8f5f4; }
-.nd-tab-active { background-color: #293b3d; color: #a6d9de; }
-.nd-grid { spacing: 12px; }
-.nd-column { width: 175px; spacing: 12px; }
-.nd-tile { padding: 18px; spacing: 14px; border-radius: 15px; background-color: #252c2d; border: 1px solid #354041; }
-.nd-calendar-tile { padding: 12px; spacing: 8px; }
-.nd-eyebrow { color: #92bfc3; font-size: 10px; font-weight: bold; }
-.nd-clock { color: #b4e1e5; font-size: 39px; font-weight: bold; }
-.nd-heading { color: #e5edec; font-size: 19px; font-weight: bold; }
-.nd-text { font-size: 13px; }
-.nd-muted { color: #a3b1af; font-size: 11px; }
-.nd-button { border-radius: 8px; background-color: #344244; color: #c4e7e9; padding: 10px; font-size: 11px; }
-.nd-button:hover, .nd-button:focus { background-color: #455c60; color: white; }
-.nd-icon-label { spacing: 6px; }
-.nd-track { color: #cee8e8; font-size: 13px; }
-.nd-media-page, .nd-system-page { padding: 24px; background-color: #252c2d; border-radius: 15px; }
-.nd-media-page { spacing: 18px; }
-.nd-system-page { spacing: 18px; }
-.nd-system-page .nd-tile { spacing: 11px; }
-.nd-chart { height: 76px; spacing: 3px; padding: 2px 0; }
-.nd-chart-bar { border-radius: 3px 3px 1px 1px; }
-.nd-chart-cpu .nd-chart-bar { background-color: #6dc9d0; }
-.nd-chart-memory .nd-chart-bar { background-color: #eba851; }
-.nd-network-rate { color: #c5e3e6; font-size: 19px; font-weight: bold; }
-.nd-disk-chart { height: 76px; spacing: 2px; }
-.nd-disk-segment { border-radius: 3px; background-color: #3d4a4c; }
-.nd-disk-segment-active { background-color: #bd769e; }
-.nd-music-icon { color: #9fd2d9; }
-.nd-artwork-box { width: 300px; height: 190px; }
-.nd-artwork { width: 300px; height: 190px; border-radius: 10px; }
-.nd-large-track { font-size: 23px; text-align: center; }
-.nd-media-artist { text-align: center; }
-.nd-media-controls { spacing: 15px; }
-.nd-media-progress { spacing: 5px; }
-.nd-media-time { text-align: center; }
-.nd-transport { padding: 14px 25px; border-radius: 13px; background-color: #364446; color: #d0e9ea; }
-.nd-transport:hover, .nd-transport:focus { background-color: #4c6467; }
-.nd-play { background-color: #a4d5da; color: #1d2d30; }
-.nd-metric { color: #b5dfe3; font-size: 31px; font-weight: bold; }
-.nd-cpu-metric { color: #6dc9d0; }
-.nd-memory-metric { color: #eba851; }
-.nd-disk-metric { color: #bd769e; }
-.nd-notice { padding: 10px; color: #dfcd98; font-size: 11px; }
-.nd-root .calendar { padding: 0; }
-.nd-root .nd-calendar .calendar-day { width: 46px; height: 40px; margin: 1px; padding: 0; border-radius: 8px; }
-.nd-root .calendar-today { background-color: #8dbec5; color: #15272a; font-weight: bold; }
-.nd-root .calendar-month-label { color: #b5dfe3; }
-.nd-root .slider { height: 20px; color: #a8d7dc; -barlevel-active-background-color: #8fbfc8; }
-.nd-appearance-page { padding: 22px; spacing: 14px; border-radius: 15px; border: 1px solid #354041; }
-.nd-appearance-options, .nd-swatches, .nd-color-fields { spacing: 9px; }
-.nd-choice { padding: 12px 8px; border-radius: 9px; font-size: 12px; }
-.nd-choice-active { font-weight: bold; }
-.nd-swatch { padding: 5px 10px; font-size: 25px; border-radius: 9px; }
-.nd-swatch:hover, .nd-swatch:focus { background-color: #455c60; }
-.nd-color-field { spacing: 5px; }
-.nd-color-entry { padding: 9px; border-radius: 8px; border: 1px solid #354041; font-size: 12px; }
-.nd-apply { width: 150px; }
-.nd-root.nd-compact { spacing: 9px; }
-.nd-compact .nd-tabs { spacing: 5px; }
-.nd-compact .nd-tab { padding: 9px 5px; font-size: 10px; }
-.nd-compact .nd-grid { spacing: 9px; }
-.nd-compact .nd-tile { padding: 12px; spacing: 8px; }
-.nd-compact .nd-calendar-tile { padding: 8px; }
-.nd-compact .nd-media-page, .nd-compact .nd-system-page,
-.nd-compact .nd-appearance-page { padding: 14px; spacing: 11px; }
-.nd-compact .nd-calendar .calendar-day { width: 32px; height: 32px; margin: 0; }
-.nd-compact .nd-swatches { spacing: 3px; }
-.nd-compact .nd-swatch { padding: 4px 6px; font-size: 19px; }
+/* Root container */
+.nd-root {
+    width: 760px;
+    padding: 14px;
+    spacing: 14px;
+    color: #e1e8e6;
+    border-radius: 16px;
+}
+.nd-page-scroll {
+    min-width: 0;
+}
+
+/* Tabs Bar */
+.nd-tabs {
+    spacing: 6px;
+    padding: 6px;
+    border-radius: 12px;
+    background-color: #171c1d;
+}
+.nd-tab-row {
+    spacing: 6px;
+}
+.nd-tab {
+    min-height: 38px;
+    padding: 8px 14px;
+    border-radius: 8px;
+    color: #9caead;
+    font-size: 12px;
+    font-weight: 500;
+    transition-duration: 160ms;
+}
+.nd-tab:hover {
+    background-color: #303b3b;
+    color: #e8f5f4;
+}
+.nd-tab:focus {
+    outline: 2px solid #6dc9d0;
+    outline-offset: 1px;
+}
+.nd-tab-active {
+    background-color: #293b3d;
+    color: #a6d9de;
+    font-weight: bold;
+}
+
+/* Layout Grid & Columns */
+.nd-grid {
+    spacing: 12px;
+}
+.nd-column {
+    spacing: 12px;
+}
+
+/* Tiles & Containers (Libadwaita 12px card standard) */
+.nd-tile {
+    padding: 16px;
+    spacing: 12px;
+    border-radius: 12px;
+    background-color: #252c2d;
+    border: 1px solid #354041;
+}
+.nd-calendar-tile {
+    padding: 12px;
+    spacing: 8px;
+}
+.nd-media-page,
+.nd-system-page,
+.nd-appearance-page {
+    padding: 20px;
+    spacing: 16px;
+    background-color: #252c2d;
+    border-radius: 12px;
+    border: 1px solid #354041;
+}
+.nd-system-page .nd-tile {
+    spacing: 10px;
+}
+
+/* Typography Scale & Numeral Tabulation */
+.nd-eyebrow {
+    color: #92bfc3;
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+}
+.nd-clock {
+    color: #b4e1e5;
+    font-size: 36px;
+    font-weight: bold;
+    font-feature-settings: "tnum";
+    font-variant-numeric: tabular-nums;
+}
+.nd-heading {
+    color: #e5edec;
+    font-size: 17px;
+    font-weight: bold;
+}
+.nd-text {
+    font-size: 13px;
+}
+.nd-muted {
+    color: #a3b1af;
+    font-size: 11px;
+}
+.nd-track {
+    color: #cee8e8;
+    font-size: 13px;
+}
+
+/* Interactive Buttons & Fitts Law (36px min touch target) */
+.nd-button {
+    min-height: 36px;
+    border-radius: 8px;
+    background-color: #344244;
+    color: #c4e7e9;
+    padding: 8px 14px;
+    font-size: 12px;
+    font-weight: 500;
+    transition-duration: 160ms;
+}
+.nd-button:hover {
+    background-color: #455c60;
+    color: #ffffff;
+}
+.nd-button:focus {
+    outline: 2px solid #6dc9d0;
+    outline-offset: 1px;
+}
+.nd-button:active {
+    background-color: #293b3d;
+}
+.nd-icon-only-button {
+    width: 36px;
+    height: 36px;
+    min-height: 36px;
+    padding: 0;
+    border-radius: 8px;
+}
+.nd-icon-label {
+    spacing: 8px;
+}
+
+/* Overview Specific: Volume row & Mini-player */
+.nd-volume-row {
+    spacing: 10px;
+}
+.nd-mini-controls {
+    spacing: 8px;
+    padding-top: 4px;
+}
+.nd-mini-play {
+    width: 36px;
+    height: 36px;
+    min-height: 36px;
+    padding: 0;
+    border-radius: 8px;
+}
+
+/* Media Page (1:1 Album Art, Horizontal Time, Circular Controls) */
+.nd-artwork-box {
+    width: 200px;
+    height: 200px;
+    border-radius: 12px;
+    background-color: #1c2223;
+}
+.nd-artwork {
+    width: 200px;
+    height: 200px;
+    border-radius: 12px;
+}
+.nd-music-icon {
+    color: #9fd2d9;
+}
+.nd-large-track {
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+}
+.nd-media-artist {
+    text-align: center;
+    font-size: 12px;
+}
+.nd-media-progress-row {
+    width: 440px;
+    spacing: 12px;
+}
+.nd-media-time {
+    font-size: 11px;
+    min-width: 45px;
+    text-align: center;
+    font-feature-settings: "tnum";
+    font-variant-numeric: tabular-nums;
+}
+.nd-media-controls {
+    spacing: 20px;
+}
+.nd-transport {
+    background-color: #364446;
+    color: #d0e9ea;
+    transition-duration: 160ms;
+}
+.nd-transport:hover {
+    background-color: #4c6467;
+}
+.nd-transport:focus {
+    outline: 2px solid #6dc9d0;
+    outline-offset: 2px;
+}
+.nd-transport-circle {
+    width: 42px;
+    height: 42px;
+    min-height: 42px;
+    border-radius: 21px;
+    padding: 0;
+}
+.nd-play-circle {
+    width: 56px;
+    height: 56px;
+    min-height: 56px;
+    border-radius: 28px;
+    padding: 0;
+    background-color: #a4d5da;
+    color: #1d2d30;
+}
+.nd-play-circle:hover {
+    background-color: #bfe6ea;
+}
+
+/* System Page & Metrics Visualization */
+.nd-metric {
+    color: #b5dfe3;
+    font-size: 28px;
+    font-weight: bold;
+    font-feature-settings: "tnum";
+    font-variant-numeric: tabular-nums;
+}
+.nd-cpu-metric {
+    color: #6dc9d0;
+}
+.nd-memory-metric {
+    color: #eba851;
+}
+.nd-disk-metric {
+    color: #bd769e;
+}
+.nd-network-rate {
+    color: #c5e3e6;
+    font-size: 17px;
+    font-weight: bold;
+    font-feature-settings: "tnum";
+    font-variant-numeric: tabular-nums;
+}
+.nd-chart {
+    height: 68px;
+    spacing: 3px;
+    padding: 2px 0;
+}
+.nd-chart-bar {
+    border-radius: 3px 3px 1px 1px;
+}
+.nd-chart-cpu .nd-chart-bar {
+    background-color: #6dc9d0;
+}
+.nd-chart-memory .nd-chart-bar {
+    background-color: #eba851;
+}
+.nd-disk-chart {
+    height: 68px;
+    spacing: 3px;
+}
+.nd-disk-segment {
+    border-radius: 3px;
+    background-color: #3d4a4c;
+}
+.nd-disk-segment-active {
+    background-color: #bd769e;
+}
+
+/* Calendar Styling */
+.nd-root .calendar {
+    padding: 0;
+}
+.nd-root .nd-calendar .calendar-day {
+    width: 44px;
+    height: 38px;
+    margin: 1px;
+    padding: 0;
+    border-radius: 8px;
+    font-size: 12px;
+    transition-duration: 120ms;
+}
+.nd-root .calendar-today {
+    background-color: #8dbec5;
+    color: #15272a;
+    font-weight: bold;
+}
+.nd-root .calendar-month-label {
+    color: #b5dfe3;
+    font-weight: bold;
+    border-radius: 8px;
+}
+.nd-root .slider {
+    height: 20px;
+    color: #a8d7dc;
+    -barlevel-active-background-color: #8fbfc8;
+}
+
+/* Appearance Page & Input Validation */
+.nd-appearance-options,
+.nd-swatches,
+.nd-color-fields {
+    spacing: 10px;
+}
+.nd-choice {
+    min-height: 36px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 12px;
+    transition-duration: 160ms;
+}
+.nd-choice:focus {
+    outline: 2px solid #6dc9d0;
+    outline-offset: 1px;
+}
+.nd-choice-active {
+    font-weight: bold;
+}
+.nd-swatch {
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+    min-height: 36px;
+    padding: 0;
+    font-size: 20px;
+    border-radius: 8px;
+    transition-duration: 160ms;
+}
+.nd-swatch:hover,
+.nd-swatch:focus {
+    background-color: #455c60;
+    outline: 2px solid #6dc9d0;
+    outline-offset: 1px;
+}
+.nd-color-field {
+    spacing: 6px;
+}
+.nd-color-entry {
+    min-height: 36px;
+    padding: 8px 10px;
+    border-radius: 8px;
+    border: 1px solid #354041;
+    font-size: 12px;
+    font-feature-settings: "tnum";
+    font-variant-numeric: tabular-nums;
+    transition-duration: 160ms;
+}
+.nd-color-entry:focus {
+    outline: 2px solid #6dc9d0;
+    outline-offset: 1px;
+}
+.nd-color-entry.is-invalid {
+    border-color: #d17b88 !important;
+}
+.nd-apply {
+    width: 160px;
+}
+.nd-notice {
+    padding: 10px;
+    color: #dfcd98;
+    font-size: 12px;
+}
+
+/* Compact Mode (< 700px) */
+.nd-root.nd-compact {
+    spacing: 10px;
+    padding: 10px;
+}
+.nd-compact .nd-tabs {
+    spacing: 4px;
+    padding: 4px;
+}
+.nd-compact .nd-tab {
+    padding: 7px 6px;
+    font-size: 11px;
+    min-height: 32px;
+}
+.nd-compact .nd-grid {
+    spacing: 10px;
+}
+.nd-compact .nd-tile {
+    padding: 12px;
+    spacing: 8px;
+}
+.nd-compact .nd-calendar-tile {
+    padding: 8px;
+}
+.nd-compact .nd-media-page,
+.nd-compact .nd-system-page,
+.nd-compact .nd-appearance-page {
+    padding: 14px;
+    spacing: 12px;
+}
+.nd-compact .nd-calendar .calendar-day {
+    width: 32px;
+    height: 32px;
+    margin: 0;
+}
+.nd-compact .nd-media-progress-row {
+    width: 280px;
+}
+.nd-compact .nd-swatches {
+    spacing: 4px;
+}
+.nd-compact .nd-swatch {
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+    min-height: 32px;
+    font-size: 17px;
+}

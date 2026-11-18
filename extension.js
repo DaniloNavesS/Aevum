@@ -272,8 +272,16 @@ export default class AevumExtension extends Extension {
         this._dashboardColumns.push(right);
         const sound = tile(_('AUDIO OUTPUT'));
         this._volumeLabel = label(_('Waiting for audio'), 'nd-muted');
+        sound.add_child(this._volumeLabel);
+
+        const volumeRow = box(false, 'nd-volume-row');
+        volumeRow.y_align = Clutter.ActorAlign.CENTER;
+        this._mute = iconButton('audio-volume-high-symbolic', _('Mute'), () => {
+            if (this._sink) this._sink.change_is_muted(!this._sink.is_muted);
+        }, 'nd-button nd-icon-only-button', 16, false);
         this._slider = new Slider.Slider(0);
         this._slider.accessible_name = _('Audio output volume');
+        this._slider.x_expand = true;
         this._slider.connect('notify::value', () => {
             if (!this._sink || this._syncingVolume) return;
             const normal = this._control.get_vol_max_norm();
@@ -281,18 +289,35 @@ export default class AevumExtension extends Extension {
             this._sink.push_volume();
             if (this._sink.is_muted && this._slider.value > 0) this._sink.change_is_muted(false);
         });
-        this._mute = iconButton('audio-volume-high-symbolic', _('Mute'), () => {
-            if (this._sink) this._sink.change_is_muted(!this._sink.is_muted);
-        });
-        sound.add_child(this._volumeLabel);
-        sound.add_child(this._slider);
-        sound.add_child(this._mute);
+        volumeRow.add_child(this._mute);
+        volumeRow.add_child(this._slider);
+        sound.add_child(volumeRow);
         right.add_child(sound);
+
         const now = tile(_('NOW PLAYING'));
         this._miniTrack = label(_('No player open'), 'nd-track');
         this._miniTrack.clutter_text.line_wrap = true;
+        this._miniArtist = label(_('MPRIS player connected'), 'nd-muted');
+        this._miniArtist.clutter_text.line_wrap = true;
+        this._miniArtist.hide();
         now.add_child(this._miniTrack);
-        now.add_child(iconButton('applications-multimedia-symbolic', _('Open media'), () => this._select('media')));
+        now.add_child(this._miniArtist);
+
+        const miniControls = box(false, 'nd-mini-controls');
+        miniControls.y_align = Clutter.ActorAlign.CENTER;
+        this._miniPlay = iconButton('media-playback-start-symbolic', _('Play or pause'),
+            () => this._playerCall('PlayPause'), 'nd-button nd-mini-play', 16, false);
+        this._miniPlay.accessible_name = _('Play or pause');
+        this._miniPlay.reactive = false;
+        this._miniPlay.can_focus = false;
+
+        const openMediaBtn = iconButton('applications-multimedia-symbolic', _('Open media'),
+            () => this._select('media'), 'nd-button', 14, true);
+        openMediaBtn.x_expand = true;
+
+        miniControls.add_child(this._miniPlay);
+        miniControls.add_child(openMediaBtn);
+        now.add_child(miniControls);
         right.add_child(now);
         page.add_child(right);
         this._addPage('dashboard', page);
@@ -316,6 +341,7 @@ export default class AevumExtension extends Extension {
         const page = box(true, 'nd-media-page');
         this._artworkBox = box(true, 'nd-artwork-box');
         this._artworkBox.x_align = Clutter.ActorAlign.CENTER;
+        this._artworkBox.y_align = Clutter.ActorAlign.CENTER;
         this._musicIcon = new St.Icon({icon_name: 'audio-x-generic-symbolic', icon_size: 64,
             style_class: 'nd-music-icon'});
         this._musicIcon.y_expand = true;
@@ -329,24 +355,30 @@ export default class AevumExtension extends Extension {
         this._artist.clutter_text.line_wrap = true;
         page.add_child(this._track);
         page.add_child(this._artist);
-        const progress = box(true, 'nd-media-progress');
+        const progress = box(false, 'nd-media-progress-row');
         progress.x_align = Clutter.ActorAlign.CENTER;
+        progress.y_align = Clutter.ActorAlign.CENTER;
         this._mediaProgress = progress;
+        this._positionCurrent = label('—:——', 'nd-muted nd-media-time');
         this._positionSlider = new Slider.Slider(0);
         this._positionSlider.accessible_name = _('Track position');
+        this._positionSlider.x_expand = true;
         this._positionSlider.connect('notify::value', () => this._queueSeek());
-        this._positionTimes = label('—:—— / —:——', 'nd-muted nd-media-time');
+        this._positionTotal = label('—:——', 'nd-muted nd-media-time');
+        this._positionTimes = this._positionTotal;
+        progress.add_child(this._positionCurrent);
         progress.add_child(this._positionSlider);
-        progress.add_child(this._positionTimes);
+        progress.add_child(this._positionTotal);
         page.add_child(progress);
         const controls = box(false, 'nd-media-controls');
         controls.x_align = Clutter.ActorAlign.CENTER;
+        controls.y_align = Clutter.ActorAlign.CENTER;
         this._prev = iconButton('media-skip-backward-symbolic', _('Previous track'),
-            () => this._playerCall('Previous'), 'nd-transport', 22, false);
+            () => this._playerCall('Previous'), 'nd-transport nd-transport-circle', 20, false);
         this._play = iconButton('media-playback-start-symbolic', _('Play or pause'),
-            () => this._playerCall('PlayPause'), 'nd-transport nd-play', 22, false);
+            () => this._playerCall('PlayPause'), 'nd-transport nd-play nd-play-circle', 26, false);
         this._next = iconButton('media-skip-forward-symbolic', _('Next track'),
-            () => this._playerCall('Next'), 'nd-transport', 22, false);
+            () => this._playerCall('Next'), 'nd-transport nd-transport-circle', 20, false);
         this._prev.accessible_name = _('Previous track');
         this._play.accessible_name = _('Play or pause');
         this._next.accessible_name = _('Next track');
@@ -489,6 +521,11 @@ export default class AevumExtension extends Extension {
             const entry = new St.Entry({style_class: 'nd-color-entry', text: this._appearance[key],
                 hint_text: '#RRGGBB', can_focus: true});
             entry.clutter_text.connect('activate', () => this._saveCustomColors());
+            entry.clutter_text.connect('text-changed', () => {
+                const val = entry.text.trim();
+                if (validColor(val)) entry.remove_style_class_name('is-invalid');
+                else entry.add_style_class_name('is-invalid');
+            });
             this._colorEntries.set(key, entry);
             column.add_child(entry);
             fields.add_child(column);
@@ -599,8 +636,14 @@ export default class AevumExtension extends Extension {
 .nd-root .nd-button:hover, .nd-root .nd-button:focus,
 .nd-root .nd-transport:hover, .nd-root .nd-transport:focus,
 .nd-root .nd-choice:hover, .nd-root .nd-choice:focus { background-color: ${hover}; color: ${foreground}; }
+.nd-root .nd-button:focus, .nd-root .nd-tab:focus, .nd-root .nd-choice:focus,
+.nd-root .nd-swatch:focus, .nd-root .nd-transport:focus,
+.nd-root .nd-color-entry:focus { outline-color: ${accent}; }
 .nd-root .nd-swatch:hover, .nd-root .nd-swatch:focus { background-color: ${hover}; }
-.nd-root .nd-choice-active, .nd-root .nd-play { background-color: ${accent}; color: ${readableOn(accent)}; }
+.nd-root .nd-choice-active, .nd-root .nd-play, .nd-root .nd-play-circle { background-color: ${accent}; color: ${readableOn(accent)}; }
+.nd-root .nd-play-circle:hover { background-color: ${mix(accent, '#ffffff', 0.15)}; }
+.nd-root .nd-mini-play:hover { background-color: ${hover}; }
+.nd-root .nd-artwork-box { background-color: ${mix(surface, background, 0.5)}; }
 .nd-root .nd-chart-cpu .nd-chart-bar { background-color: ${accent}; }
 .nd-root .nd-chart-memory .nd-chart-bar { background-color: ${warm}; }
 .nd-root .nd-network-rate { color: ${accentText}; }
@@ -662,6 +705,7 @@ export default class AevumExtension extends Extension {
 }
 .nd-root .slider { color: ${accent}; -barlevel-active-background-color: ${accent}; }
 .nd-root .nd-color-entry { background-color: ${background}; color: ${foreground}; border-color: ${border}; }
+.nd-root .nd-color-entry.is-invalid { border-color: ${pink} !important; }
 `;
     }
 
@@ -737,13 +781,17 @@ export default class AevumExtension extends Extension {
         this._appearanceModes.vertical = compact;
         this._appearanceFields.vertical = compact;
         for (const column of this._dashboardColumns) {
-            column.width = compact ? -1 : 175;
-            column.x_expand = compact;
+            column.width = compact ? -1 : 185;
+            column.x_expand = true;
         }
-        const artworkWidth = Math.min(300, panelWidth - 48);
-        this._artworkBox.width = artworkWidth;
-        if (this._artwork) this._artwork.width = artworkWidth;
-        this._mediaProgress.width = Math.min(520, panelWidth - (compact ? 60 : 96));
+        const artworkDim = Math.min(200, panelWidth - 48);
+        this._artworkBox.width = artworkDim;
+        this._artworkBox.height = artworkDim;
+        if (this._artwork) {
+            this._artwork.width = artworkDim;
+            this._artwork.height = artworkDim;
+        }
+        this._mediaProgress.width = Math.min(440, panelWidth - (compact ? 48 : 80));
         this._updatePageHeight();
     }
 
@@ -784,7 +832,8 @@ export default class AevumExtension extends Extension {
                 ? _('Sound muted') : _('Volume · %s%').replace('%s', Math.round(value * 100));
             this._mute._ndIcon.icon_name = this._sink?.is_muted
                 ? 'audio-volume-muted-symbolic' : 'audio-volume-high-symbolic';
-            this._mute._ndLabel.text = this._sink?.is_muted ? _('Unmute') : _('Mute');
+            if (this._mute._ndLabel)
+                this._mute._ndLabel.text = this._sink?.is_muted ? _('Unmute') : _('Mute');
             this._mute.accessible_name = this._sink?.is_muted ? _('Unmute') : _('Mute');
         } finally { this._syncingVolume = false; }
     }
@@ -960,9 +1009,11 @@ export default class AevumExtension extends Extension {
         this._syncingPosition = true;
         try { this._positionSlider.value = this._trackLength ? clamped / this._trackLength : 0; }
         finally { this._syncingPosition = false; }
-        this._positionTimes.text = this._trackLength
-            ? `${formatDuration(clamped)} / ${formatDuration(this._trackLength)}`
-            : '—:—— / —:——';
+        const currentStr = formatDuration(clamped);
+        const totalStr = formatDuration(this._trackLength);
+        if (this._positionCurrent) this._positionCurrent.text = this._trackLength ? currentStr : '—:——';
+        if (this._positionTotal) this._positionTotal.text = this._trackLength ? totalStr : '—:——';
+        this._positionTimes.text = this._trackLength ? `${currentStr} / ${totalStr}` : '—:—— / —:——';
     }
 
     _queueSeek() {
@@ -1019,7 +1070,8 @@ export default class AevumExtension extends Extension {
                 loader.write(bytes);
                 loader.close();
                 const original = loader.get_pixbuf();
-                const scale = Math.min(300 / original.width, 190 / original.height);
+                const maxDim = 200;
+                const scale = Math.min(maxDim / original.width, maxDim / original.height);
                 const width = Math.max(1, Math.round(original.width * scale));
                 const height = Math.max(1, Math.round(original.height * scale));
                 const pixbuf = original.scale_simple(width, height, GdkPixbuf.InterpType.BILINEAR);
@@ -1028,7 +1080,7 @@ export default class AevumExtension extends Extension {
                 const format = pixbuf.get_has_alpha() ? Cogl.PixelFormat.RGBA_8888 : Cogl.PixelFormat.RGB_888;
                 content.set_bytes(context, pixbuf.get_pixels(), format, pixbuf.width, pixbuf.height, pixbuf.rowstride);
                 this._artwork = new St.Widget({content,
-                    width: Math.min(300, (this._panelWidth ?? 760) - 48), height: 190,
+                    width, height,
                     content_gravity: Clutter.ContentGravity.RESIZE_ASPECT,
                     style_class: 'nd-artwork'});
                 this._artworkBox.add_child(this._artwork);
@@ -1157,10 +1209,23 @@ export default class AevumExtension extends Extension {
         }
         this._track.text = String(title);
         this._miniTrack.text = String(title);
-        this._artist.text = Array.isArray(artists) ? artists.join(', ') : this._player ? _('MPRIS player connected') : _('No MPRIS player found.');
+        const artistText = Array.isArray(artists) ? artists.join(', ') : (this._player ? _('MPRIS player connected') : '');
+        this._artist.text = artistText || _('No MPRIS player found.');
+        if (this._miniArtist) {
+            this._miniArtist.text = artistText;
+            this._miniArtist.visible = Boolean(artistText);
+        }
         const playing = this._player?.get_cached_property('PlaybackStatus')?.deep_unpack() === 'Playing';
         this._play._ndIcon.icon_name = playing
             ? 'media-playback-pause-symbolic' : 'media-playback-start-symbolic';
+        if (this._miniPlay) {
+            this._miniPlay._ndIcon.icon_name = playing
+                ? 'media-playback-pause-symbolic' : 'media-playback-start-symbolic';
+            const canPlayPause = Boolean(this._player?.get_cached_property(playing ? 'CanPause' : 'CanPlay')?.deep_unpack());
+            this._miniPlay.reactive = canPlayPause;
+            this._miniPlay.can_focus = canPlayPause;
+            this._miniPlay.opacity = canPlayPause ? 255 : 90;
+        }
         for (const [b, capability] of [[this._play, playing ? 'CanPause' : 'CanPlay'], [this._next, 'CanGoNext'], [this._prev, 'CanGoPrevious']]) {
             b.reactive = Boolean(this._player?.get_cached_property(capability)?.deep_unpack());
             b.can_focus = b.reactive;
@@ -1234,6 +1299,6 @@ export default class AevumExtension extends Extension {
         this._colorEntries?.clear();
         this._dateMenu = null;
         this._menu = null;
-        for (const key of ['_calendar', '_clock', '_date', '_volumeLabel', '_slider', '_mute', '_miniTrack', '_track', '_artist', '_prev', '_play', '_next', '_artworkBox', '_musicIcon', '_artwork', '_cpu', '_memory', '_memoryDetail', '_disk', '_diskDetail', '_networkGrid', '_networkInterface', '_download', '_upload', '_pingValue', '_pingDetail', '_notice', '_appearanceHint', '_mediaProgress', '_positionSlider', '_positionTimes', '_tabsBox', '_tabRows', '_dashboardGrid', '_dashboardColumns', '_systemGrid', '_appearanceModes', '_appearanceFields']) this[key] = null;
+        for (const key of ['_calendar', '_clock', '_date', '_volumeLabel', '_slider', '_mute', '_miniTrack', '_miniArtist', '_miniPlay', '_track', '_artist', '_prev', '_play', '_next', '_artworkBox', '_musicIcon', '_artwork', '_cpu', '_memory', '_memoryDetail', '_disk', '_diskDetail', '_networkGrid', '_networkInterface', '_download', '_upload', '_pingValue', '_pingDetail', '_notice', '_appearanceHint', '_mediaProgress', '_positionSlider', '_positionTimes', '_positionCurrent', '_positionTotal', '_tabsBox', '_tabRows', '_dashboardGrid', '_dashboardColumns', '_systemGrid', '_appearanceModes', '_appearanceFields']) this[key] = null;
     }
 }
