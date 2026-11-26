@@ -12,7 +12,8 @@ import * as Volume from 'resource:///org/gnome/shell/ui/status/volume.js';
 import {Extension, gettext as _} from 'resource:///org/gnome/shell/extensions/extension.js';
 
 const label = (text, style = 'nd-text') => new St.Label({text, style_class: style});
-const box = (vertical = false, style = '') => new St.BoxLayout({vertical, style_class: style});
+const orient = vertical => vertical ? Clutter.Orientation.VERTICAL : Clutter.Orientation.HORIZONTAL;
+const box = (vertical = false, style = '') => new St.BoxLayout({orientation: orient(vertical), style_class: style});
 function button(text, action, style = 'nd-button') {
     const b = new St.Button({label: text, style_class: style, can_focus: true});
     b.connect('clicked', action);
@@ -365,7 +366,6 @@ export default class AevumExtension extends Extension {
         this._positionSlider.x_expand = true;
         this._positionSlider.connect('notify::value', () => this._queueSeek());
         this._positionTotal = label('—:——', 'nd-muted nd-media-time');
-        this._positionTimes = this._positionTotal;
         progress.add_child(this._positionCurrent);
         progress.add_child(this._positionSlider);
         progress.add_child(this._positionTotal);
@@ -764,7 +764,7 @@ export default class AevumExtension extends Extension {
         this._root.set_style(`width: ${panelWidth}px;`);
         if (compact) this._root.add_style_class_name('nd-compact');
         else this._root.remove_style_class_name('nd-compact');
-        this._tabsBox.vertical = compact;
+        this._tabsBox.orientation = orient(compact);
         this._tabRows[1].visible = compact;
         let index = 0;
         for (const tab of this._tabs.values()) {
@@ -775,11 +775,11 @@ export default class AevumExtension extends Extension {
             }
             index++;
         }
-        this._dashboardGrid.vertical = compact;
-        this._systemGrid.vertical = compact;
-        this._networkGrid.vertical = compact;
-        this._appearanceModes.vertical = compact;
-        this._appearanceFields.vertical = compact;
+        this._dashboardGrid.orientation = orient(compact);
+        this._systemGrid.orientation = orient(compact);
+        this._networkGrid.orientation = orient(compact);
+        this._appearanceModes.orientation = orient(compact);
+        this._appearanceFields.orientation = orient(compact);
         for (const column of this._dashboardColumns) {
             column.width = compact ? -1 : 185;
             column.x_expand = true;
@@ -1013,7 +1013,6 @@ export default class AevumExtension extends Extension {
         const totalStr = formatDuration(this._trackLength);
         if (this._positionCurrent) this._positionCurrent.text = this._trackLength ? currentStr : '—:——';
         if (this._positionTotal) this._positionTotal.text = this._trackLength ? totalStr : '—:——';
-        this._positionTimes.text = this._trackLength ? `${currentStr} / ${totalStr}` : '—:—— / —:——';
     }
 
     _queueSeek() {
@@ -1209,7 +1208,9 @@ export default class AevumExtension extends Extension {
         }
         this._track.text = String(title);
         this._miniTrack.text = String(title);
-        const artistText = Array.isArray(artists) ? artists.join(', ') : (this._player ? _('MPRIS player connected') : '');
+        const artistText = Array.isArray(artists) && artists.length
+            ? artists.join(', ')
+            : (this._player ? _('MPRIS player connected') : '');
         this._artist.text = artistText || _('No MPRIS player found.');
         if (this._miniArtist) {
             this._miniArtist.text = artistText;
@@ -1299,6 +1300,6 @@ export default class AevumExtension extends Extension {
         this._colorEntries?.clear();
         this._dateMenu = null;
         this._menu = null;
-        for (const key of ['_calendar', '_clock', '_date', '_volumeLabel', '_slider', '_mute', '_miniTrack', '_miniArtist', '_miniPlay', '_track', '_artist', '_prev', '_play', '_next', '_artworkBox', '_musicIcon', '_artwork', '_cpu', '_memory', '_memoryDetail', '_disk', '_diskDetail', '_networkGrid', '_networkInterface', '_download', '_upload', '_pingValue', '_pingDetail', '_notice', '_appearanceHint', '_mediaProgress', '_positionSlider', '_positionTimes', '_positionCurrent', '_positionTotal', '_tabsBox', '_tabRows', '_dashboardGrid', '_dashboardColumns', '_systemGrid', '_appearanceModes', '_appearanceFields']) this[key] = null;
+        for (const key of ['_calendar', '_clock', '_date', '_volumeLabel', '_slider', '_mute', '_miniTrack', '_miniArtist', '_miniPlay', '_track', '_artist', '_prev', '_play', '_next', '_artworkBox', '_musicIcon', '_artwork', '_cpu', '_memory', '_memoryDetail', '_disk', '_diskDetail', '_networkGrid', '_networkInterface', '_download', '_upload', '_pingValue', '_pingDetail', '_notice', '_appearanceHint', '_mediaProgress', '_positionSlider', '_positionCurrent', '_positionTotal', '_tabsBox', '_tabRows', '_dashboardGrid', '_dashboardColumns', '_systemGrid', '_appearanceModes', '_appearanceFields']) this[key] = null;
     }
 }

@@ -5,8 +5,8 @@ if ! command -v gnome-shell >/dev/null 2>&1; then
     exit 1
 fi
 shell_version="$(gnome-shell --version)"
-if [[ ! "$shell_version" =~ (^|[[:space:]])48\. ]]; then
-    echo "This package targets GNOME 48. Detected: $shell_version" >&2
+if [[ ! "$shell_version" =~ (^|[[:space:]])(4[89]|5[01])\. ]]; then
+    echo "This package targets GNOME 48 to 51. Detected: $shell_version" >&2
     exit 1
 fi
 source_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
