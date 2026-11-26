@@ -1,10 +1,10 @@
-# Aevum — GNOME 48
+# Aevum — GNOME Shell 48–51
 
-Aevum is an open source GNOME Shell 48 extension that turns the date and time menu into a compact control panel. It brings together a calendar, audio and media controls, system and network activity, a game server connection check, notifications, and appearance settings. English is the source language. The interface follows the GNOME session language, with Brazilian Portuguese, Spanish, and French translations.
+Aevum is an open source GNOME Shell extension for GNOME 48 to 51 that turns the date and time menu into a compact control panel. It brings together a calendar, audio and media controls, system and network activity, a game server connection check, notifications, and appearance settings. English is the source language. The interface follows the GNOME session language, with Brazilian Portuguese, Spanish, and French translations.
 
-**Quick start:** On GNOME 48, run `bash setup.sh`, log out and back in, then run `gnome-extensions enable aevum@local`. See the installation steps below. Licensed under the [MIT License](LICENSE).
+**Quick start:** On GNOME 48 to 51, run `bash setup.sh`, log out and back in, then run `gnome-extensions enable aevum@local`. See the installation steps below. Licensed under the [MIT License](LICENSE).
 
-This is an experimental extension for **Fedora 42 / GNOME Shell 48.8 / Wayland**. The panel opens when you click the date and time in the top bar. It does not add another top bar button.
+This is an experimental extension for **GNOME Shell 48 to 51 on Wayland**. The panel opens when you click the date and time in the top bar. It does not add another top bar button.
 
 ## Screenshots
 
@@ -32,7 +32,7 @@ Extract the ZIP archive, open a terminal in the extracted directory (the one con
 bash setup.sh
 ```
 
-Do not use `sudo`. The installer checks for GNOME 48, copies the extension and translations into your user extension directory, and backs up any previous installation of this extension. It does not install packages or change system files.
+Do not use `sudo`. The installer checks for GNOME 48 to 51, copies the extension and translations into your user extension directory, and backs up any previous installation of this extension. It does not install packages or change system files.
 
 **Save your work, log out, and log back in.** On Wayland, do not use Alt+F2 → r to reload the Shell.
 
@@ -88,11 +88,11 @@ Share the relevant error message when reporting an issue; the entire session log
 
 ## Verification and limitations
 
-JavaScript and shell syntax, metadata, package structure, and installer paths have been checked. The calendar, date menu, and audio APIs were reviewed against the GNOME Shell 48 source code.
+JavaScript and shell syntax, metadata, package structure, and installer paths have been checked. The calendar, date menu, and audio APIs were reviewed against the GNOME Shell 48 source code, and the changes for GNOME 49 through 51 were applied from the official porting guides.
 
-**Syntax has been checked, but rendering, audio, and MPRIS integration still need testing in a GNOME session.** This is an initial package, not an extension approved or published in the official catalog.
+**Syntax has been checked, but rendering, audio, and MPRIS integration still need testing in a GNOME session.** The extension was run on GNOME Shell 48; GNOME Shell 49 to 51 are covered by static analysis and the upstream porting guides, not by a live session. This is an initial package, not an extension approved or published in the official catalog.
 
-It targets GNOME 48 specifically; a GNOME upgrade may require changes. The panel's maximum width is about 784 logical pixels, including padding. The compact layout puts content into one column and caps page height so it can scroll.
+It supports GNOME Shell 48 to 51; a future GNOME upgrade may require changes. The panel's maximum width is about 784 logical pixels, including padding. The compact layout puts content into one column and caps page height so it can scroll.
 
 ## Customization
 
@@ -110,6 +110,7 @@ The extension ID is `aevum@local` and the gettext domain is `aevum`. The install
 - https://github.com/GNOME/gnome-shell/blob/gnome-48/js/ui/dateMenu.js
 - https://github.com/GNOME/gnome-shell/blob/gnome-48/js/ui/calendar.js
 - https://github.com/GNOME/gnome-shell/blob/gnome-48/js/ui/status/volume.js
+- https://gjs.guide/extensions/upgrading/gnome-shell-51.html
 - https://specifications.freedesktop.org/mpris/latest/
 
 The GNOME source files referenced above are not included in this package. The extension uses the corresponding modules provided by the system.
